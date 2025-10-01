@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión Final: Reflexión y Recompensa</title>
+    <!-- Librería jsPDF para generación de PDF en el cliente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Estilos generales para asegurar la apariencia en Joomag */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7; /* Fondo sutil si Joomag lo permite */
+        }
+        .mission-container {
+            padding: 25px;
+            margin: 20px auto;
+            background-color: #FEF3C7; /* Fondo cálido (Amarillo claro) */
+            border: 4px solid #D97706; /* Borde naranja oscuro */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Ancho máximo para mejor visualización */
+        }
+        .button {
+            background-color: #F97316; /* Naranja brillante */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Asegurar que el botón ocupe todo el espacio */
+            box-sizing: border-box;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #E65100;
+        }
+        .feedback-correct {
+            background-color: #D1FAE5; /* Verde claro */
+            color: #065F46; /* Verde oscuro */
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .feedback-error {
+            background-color: #FEE2E2; /* Rojo claro */
+            color: #991B1B; /* Rojo oscuro */
+            padding: 10px;
+            border-radius: 6px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mission-container">
+
+    <h3 style="color: #D97706; font-size: 1.5rem; text-align: center; margin-bottom: 5px;">🏆 Misión Final: El Sendero Completado</h3>
+    <p style="color: #6B7280; font-size: 0.9rem; text-align: center; margin-top: 0; border-bottom: 2px dashed #FDBA74; padding-bottom: 15px;">Página Activa | Refuerzo: Metacognición y Evaluación Formativa</p>
+
+    <div style="background-color: white; padding: 20px; border-radius: 8px;">
+        <p style="color: #374151; line-height: 1.6;">
+            Arion mencionó: *"El conocimiento es una llama que se enciende con la acción, la pregunta y **el error**."* El error es un componente esencial de la metodología activa.
+        </p>
+        
+        <!-- CAMPO DE NOMBRE REQUERIDO PARA EL CERTIFICADO -->
+        <div style="margin-top: 15px;">
+            <label for="user-name-input" style="display: block; font-weight: 700; color: #374151; margin-bottom: 5px;">Ingresa tu Nombre Completo para la Guía de Recompensa:</label>
+            <input type="text" id="user-name-input" placeholder="Ej: Juan Pérez o María López" style="border: 1px solid #D97706;">
+        </div>
+        
+        <!-- PREGUNTA AUTOCORREGIBLE -->
+        <div style="margin-top: 20px;">
+            <label style="display: block; font-weight: 700; color: #D97706; margin-bottom: 10px;">
+                **Pregunta de Comprensión Final:** ¿Qué principio metodológico se fortalece directamente cuando el docente anima al estudiante a **analizar por qué cometió un error** y reintentar la actividad?
+            </label>
+            <select id="q4-respuesta" style="border: 1px solid #FDBA74; background-color: #FEF3C7;">
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="A">Metacognición y Mejora Continua.</option>
+                <option value="B">Evaluación Sumativa Rígida.</option>
+                <option value="C">Control Total del Docente sobre el Proceso.</option>
+            </select>
+            <div id="q4-feedback" style="margin-top: 10px; display: none; font-weight: 600;"></div>
+        </div>
+        <!-- /PREGUNTA AUTOCORREGIBLE -->
+
+        <div style="margin-top: 15px; text-align: center;">
+            <button id="q4-boton" class="button" onclick="checkAnswer(4)">
+                Verificar Misión y Desbloquear Guía
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Contenido Teórico de la Guía expandido y formateado para el PDF
+    const PDF_GUIDE_CONTENT = `
+        ---
+        **GUÍA TEÓRICA DE METODOLOGÍAS ACTIVAS Y GAMIFICACIÓN**
+        ---
+
+        **Misión 1: Diagnóstico Narrativo**
+        **Concepto Central: Storytelling y Motivación Intrínseca**
+        * **Principio Reforzado:** Superar la Indefensión Aprendida (Motivación Intrínseca). La narrativa (Lyra buscando la Llama) debe generar un *disparador* o *gancho* que rompa la pasividad del estudiante. El conocimiento se presenta como un tesoro al que se accede por acción personal.
+        * **Opciones Descartadas:**
+            * **Design Thinking (DT):** Aunque el DT es una metodología activa (enfocada en la solución creativa de problemas centrada en el usuario), esta misión inicial solo busca la **activación de la curiosidad**, no el proceso completo de ideación e iteración del DT.
+
+        **Misión 2: Indagación y Diseño Curricular**
+        **Concepto Central: Aprendizaje Basado en la Indagación/Problemas (ABP)**
+        * **Principio Reforzado:** El proceso de Lyra (formular una pregunta compleja y buscar la respuesta metódicamente) es la base del **ABP**. El alumno se involucra activamente en el proceso de **descubrir la respuesta**, fortaleciendo la autonomía.
+        * **Opciones Descartadas:**
+            * **Clase Magistral Inversa (Flipped Classroom):** La Clase Inversa se centra en la inversión del trabajo (consumo de contenido en casa, práctica en clase). Aunque es activa, esta misión se centra en la **creación de la pregunta** y la **búsqueda de la solución**, que es el núcleo del ABP.
+            * **Aprendizaje Pasivo:** Esto es lo opuesto a la metodología activa. El ABP exige acción, mientras que el aprendizaje pasivo se basa en la recepción de información (como Lyra al inicio, esperando que los libros "cobraran vida").
+
+        **Misión 3: Diseño Colaborativo**
+        **Concepto Central: Aprendizaje Colaborativo/Cooperativo**
+        * **Principio Reforzado:** Interdependencia Positiva. La Llama Activa crece cuando Lyra, Kai y Zora unen sus talentos y preguntas diversas. La Interdependencia Positiva significa que el éxito de un individuo depende de la contribución del equipo.
+        * **Opciones Descartadas:**
+            * **Trabajo Individualizado:** Si bien tiene su lugar, esta opción se opone al espíritu de la misión, donde se demuestra que la Llama (el conocimiento) **crece con la interacción** y la diversidad de preguntas.
+            * **Aprendizaje Rígido por Competencia:** La competencia excesiva puede desalentar la colaboración y la ayuda mutua. El foco aquí es la **cooperación** y el uso de **habilidades complementarias**, no la rivalidad por la mejor calificación.
+
+        **Misión Final: El Valor del Error**
+        **Concepto Central: Metacognición y Evaluación Formativa**
+        * **Principio Reforzado:** La Metacognición se activa cuando el estudiante analiza el *por qué* de su fallo y ajusta su estrategia (Mejora Continua). El error es una **fuente de información** valiosa para el docente y una oportunidad de reflexión para el alumno.
+        * **Opciones Descartadas:**
+            * **Evaluación Sumativa Rígida:** Este modelo se centra en la calificación final (el "sumo") y la penalización del error, en lugar de en el proceso de aprendizaje. Es contraria a la Gamificación y a la Evaluación Formativa.
+            * **Control Total del Docente:** Las metodologías activas exigen que el control y la autonomía pasen al estudiante. El docente es un **guía (Arion)** que ayuda a Lyra a encontrar la respuesta, no un dictador del proceso.
+    `;
+
+    function checkAnswer(missionId) {
+        const select = document.getElementById(`q${missionId}-respuesta`);
+        const feedback = document.getElementById(`q${missionId}-feedback`);
+        const boton = document.getElementById(`q${missionId}-boton`);
+        const userNameInput = document.getElementById('user-name-input');
+        const userName = userNameInput.value.trim();
+        const userAnswer = select.value;
+        const correctAnswer = 'A';
+        
+        if (!userName) {
+            feedback.className = 'feedback-error';
+            feedback.style.display = 'block';
+            feedback.innerHTML = '❌ **ERROR:** Por favor, ingresa tu nombre completo para personalizar tu recompensa.';
+            return;
+        }
+
+        feedback.style.display = 'block';
+
+        if (userAnswer === correctAnswer) {
+            feedback.className = 'feedback-correct';
+            feedback.innerHTML = `✅ **¡Misión Cumplida!** Has demostrado la comprensión final. Tu **Guía de la Llama Activa** está lista para ser descargada.`;
+            boton.innerText = 'DESCARGAR GUÍA DE LA LLAMA ACTIVA';
+            boton.style.backgroundColor = '#10B981';
+            // Cambia la acción del botón a la función de generación del PDF
+            boton.onclick = () => generatePDFReward(userName); 
+        } else {
+            feedback.className = 'feedback-error';
+            feedback.innerHTML = `❌ Incorrecto. Piensa en el rol del error para la estrategia de aprendizaje. ¡Inténtalo de nuevo!`;
+            boton.innerText = 'Reintentar Misión Final';
+            boton.style.backgroundColor = '#F97316';
+            boton.onclick = () => checkAnswer(4); // Restablece la función de verificación
+        }
+    }
+
+    function generatePDFReward(name) {
+        // Asegurarse de que jspdf esté disponible
+        if (typeof window.jspdf === 'undefined') {
+            // alert('Error: La librería jsPDF no ha cargado correctamente. Intenta recargar la página.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        const margin = 20;
+        const lineHeight = 5.5; // Ajuste para texto más denso
+        let y = margin;
+        
+        // --- TÍTULO DE RECOMPENSA (Portadilla) ---
+        
+        doc.setFont('Helvetica', 'bold'); // Configurar fuente negrita para títulos
+        doc.setFontSize(24);
+        doc.setTextColor('#D97706'); 
+        doc.text("GUÍA DE LA LLAMA ACTIVA", margin, y);
+        y += 12;
+
+        doc.setFont('Helvetica', 'normal'); // Restablecer fuente normal
+        doc.setFontSize(14);
+        doc.setTextColor('#374151'); 
+        doc.text(`${name},`, margin, y);
+        y += lineHeight;
+
+        doc.setFontSize(10);
+        doc.setTextColor('#6B7280'); 
+        const welcomeText = "recién iniciado en el sendero de los reinos gamificados, has desbloqueado la entrada y ganado un manuscrito con información crucial en el viaje que recién comienza.";
+        doc.text(doc.splitTextToSize(welcomeText, 170), margin, y);
+        y += 15;
+
+        doc.setDrawColor('#F59E0B');
+        doc.line(margin, y, 190, y); 
+        y += 10;
+        
+        // --- CONTENIDO TEÓRICO ---
+        
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor('#D97706');
+        doc.text("Fundamentos Teóricos de la Narrativa Activa", margin, y);
+        y += 10;
+        
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor('#374151');
+        
+        const textLines = PDF_GUIDE_CONTENT.split('\n').filter(line => line.trim() !== ''); // Dividir por línea y limpiar vacíos
+
+        textLines.forEach(rawLine => {
+            const line = rawLine.trim();
+
+            if (y > 280) { 
+                doc.addPage();
+                y = margin;
+                doc.setFont('Helvetica', 'normal'); 
+                doc.setFontSize(10);
+                doc.setTextColor('#374151');
+            }
+
+            // Detección de títulos y subtítulos
+            const isMissionTitle = line.startsWith('**Misión');
+            const isConceptTitle = line.startsWith('**Concepto Central:');
+            const isPrincipleTitle = line.startsWith('* **Principio Reforzado:');
+            const isDiscardedOption = line.startsWith('* **Opciones Descartadas:');
+            
+            // Si es un título de Misión o Concepto Central, se usa negrita grande y color.
+            if (isMissionTitle || isConceptTitle) {
+                doc.setFont('Helvetica', 'bold'); 
+                doc.setTextColor('#D97706');
+                doc.text(line.replace(/\*\*/g, ''), margin, y);
+                y += lineHeight + (isMissionTitle ? 3 : 1); 
+            } else if (isPrincipleTitle || isDiscardedOption) {
+                // Subtítulos de principio y descarte
+                doc.setFont('Helvetica', 'bold');
+                doc.setTextColor('#374151'); 
+                doc.text(line.replace(/\*\*/g, ''), margin, y);
+                y += lineHeight + 1;
+            } else {
+                // Para el contenido del párrafo (explicaciones)
+                const paragraphLines = doc.splitTextToSize(line, 170);
+                doc.setFont('Helvetica', 'normal');
+                doc.setTextColor('#374151');
+                paragraphLines.forEach(pLine => {
+                    if (y > 280) { doc.addPage(); y = margin; }
+                    doc.text(pLine.trim(), margin + 5, y); // Ligeramente indentado
+                    y += lineHeight;
+                });
+                y += 2; // Pequeño espacio entre párrafos
+            }
+        });
+
+        // Descarga del PDF
+        const fileName = `Guia_de_la_Llama_Activa_${name.replace(/\s/g, '_')}.pdf`;
+        doc.save(fileName);
+    }
+</script>
+
+</body>
+</html>
+
